@@ -1,0 +1,10 @@
+.venv
+__pycache__
+*.pyc
+_out
+report.json
+explore.py
+.git
+.gitignore
+*.md
+.DS_Store

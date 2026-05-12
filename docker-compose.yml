@@ -1,0 +1,14 @@
+services:
+  kodo-scraper:
+    build: .
+    image: kodo-scraper:latest
+    container_name: kodo-scraper
+    ports:
+      - "8000:8000"
+    environment:
+      MAX_CONCURRENCY: "2"
+      SCRAPE_TIMEOUT_MS: "60000"
+      LOG_LEVEL: "INFO"
+    restart: unless-stopped
+    # Chromium needs more /dev/shm than the default 64MB or it crashes.
+    shm_size: "1gb"

@@ -1,0 +1,25 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Project artifacts (exploration + sample outputs)
+_out/
+explore.py
+report.json
+*.log
+
+# IDE / editor
+.idea/
+.vscode/
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
