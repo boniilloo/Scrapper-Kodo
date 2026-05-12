@@ -30,8 +30,26 @@ MAX_CONCURRENCY = int(os.environ.get("MAX_CONCURRENCY", "2"))
 SCRAPE_TIMEOUT_MS = int(os.environ.get("SCRAPE_TIMEOUT_MS", "60000"))
 
 
+EXAMPLE_REPORT_URL = (
+    "https://app.kodopeople.com/index.php?r=report%2Fshare&id="
+    "d4lkFhOgY8gsg2VgOEF_VzIxYzF%20hN2Q5Yzk3MjJhZjBlMjUzY2EwNTc5NDE2Nzk0NTIzYTNmZDc3Y2YyMzdjM2RmM2VlMjRiNDQ3"
+    "%20MmIwN2VIybmYqllyCfTUOlvPr0Dg23d71PkSP8C6KUfZ2qgPFisekK6GvQ2iIYK9o_f0wJcP7RYU1Q"
+    "%20nrB0GpPkYHUHpqph3A6hAyeX3KL7M10UHfVA%3D%3D"
+)
+
+
 class ScrapeRequest(BaseModel):
-    url: HttpUrl = Field(..., description="Public Kodo People share URL")
+    url: HttpUrl = Field(
+        ...,
+        description="Public Kodo People share URL",
+        examples=[EXAMPLE_REPORT_URL],
+    )
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [{"url": EXAMPLE_REPORT_URL}],
+        }
+    }
 
 
 @asynccontextmanager

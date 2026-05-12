@@ -2,6 +2,9 @@
 
 Servicio HTTP que recibe la URL pública de un informe **Soft Skills PRO** de Kodo People y devuelve su contenido en JSON: cabecera, los 18 *behavioral drivers* del radar (puntuaciones 0–100) y, por cada uno, su análisis detallado con todas las sub-variables (escala −150…+150, descripciones polares y posición del marcador).
 
+- **Producción:** https://kodo.fqsource.com
+- **Docs interactivas (Swagger UI):** https://kodo.fqsource.com/docs
+
 ## Cómo funciona
 
 La página renderiza el radar con [ECharts](https://echarts.apache.org/) sobre un `<canvas>`, así que el listado de los 18 drivers solo existe en el JS del cliente, no en el HTML. Por eso usamos Playwright + Chromium headless:
@@ -17,16 +20,26 @@ La página renderiza el radar con [ECharts](https://echarts.apache.org/) sobre u
 
 Para uso local sin Docker: Python 3.12 y `playwright install chromium`.
 
-## Quick start (Docker)
+## Quick start
+
+Usa la instancia desplegada o levántate una local con Docker.
+
+**Instancia en producción:**
+
+```bash
+curl https://kodo.fqsource.com/health
+```
+
+**Local con Docker:**
 
 ```bash
 docker compose up -d --build
 curl http://localhost:8000/health
 ```
 
-Tras unos segundos `/health` devolverá `{"status":"ok","browser_connected":true,"max_concurrency":2}`.
+En ambos casos `/health` devolverá `{"status":"ok","browser_connected":true,"max_concurrency":2}`.
 
-Para apagar:
+Para apagar la local:
 
 ```bash
 docker compose down
@@ -34,7 +47,10 @@ docker compose down
 
 ## API
 
-Documentación interactiva en [`http://localhost:8000/docs`](http://localhost:8000/docs) (Swagger UI generado por FastAPI).
+Docs interactivas (Swagger UI generado por FastAPI):
+
+- Prod: [`https://kodo.fqsource.com/docs`](https://kodo.fqsource.com/docs)
+- Local: [`http://localhost:8000/docs`](http://localhost:8000/docs)
 
 ### `POST /scrape`
 
@@ -84,13 +100,15 @@ Respuesta `200 OK` (resumida):
 }
 ```
 
-Ejemplo de llamada:
+Ejemplo de llamada contra producción:
 
 ```bash
-curl -X POST http://localhost:8000/scrape \
+curl -X POST https://kodo.fqsource.com/scrape \
   -H "Content-Type: application/json" \
   -d '{"url":"https://app.kodopeople.com/index.php?r=report%2Fshare&id=..."}'
 ```
+
+(en local, sustituye `https://kodo.fqsource.com` por `http://localhost:8000`)
 
 Códigos de error:
 
