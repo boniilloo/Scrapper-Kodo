@@ -3,8 +3,11 @@ services:
     build: .
     image: kodo-scraper:latest
     container_name: kodo-scraper
-    ports:
-      - "8000:8000"
+    # Coolify/Traefik routes the configured domain to this container over the
+    # internal Docker network, so we just expose the port instead of binding
+    # it to the host (which would conflict with other services on :8000).
+    expose:
+      - "8000"
     environment:
       MAX_CONCURRENCY: "2"
       SCRAPE_TIMEOUT_MS: "60000"
